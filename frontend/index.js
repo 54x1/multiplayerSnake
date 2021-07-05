@@ -107,7 +107,8 @@ function handleGameOver(data) {
     alert('You Lose :(');
   }
 }
-socket.on('gameCode', function(data){
+
+socket.on('gameCode', function(gameCode){
     gameCodeDisplay.innerText = gameCode;
 });
 
