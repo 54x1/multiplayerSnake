@@ -21,7 +21,9 @@ const gameCodeDisplay = document.getElementById('gameCodeDisplay');
 newGameBtn.addEventListener('click', newGame);
 joinGameBtn.addEventListener('click', joinGame);
 
-
+$(joinGameBtn).on('click', function(){
+gameCodeDisplay == gameCodeInput.val();
+});
 function newGame() {
   socket.emit('newGame');
   init();
