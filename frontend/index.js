@@ -28,8 +28,8 @@ function newGame() {
 }
 
 function joinGame(gameCodeInput) {
-  const gameCodeInput = gameCodeInput.value;
-  socket.emit('joinGame', gameCodeInput);
+  const code = gameCodeInput.value;
+  socket.emit('joinGame', code);
   socket.emit('gameCode', {
     data: gameCodeInput.value
   });
