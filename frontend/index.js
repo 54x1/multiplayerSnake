@@ -30,6 +30,12 @@ function newGame() {
 function joinGame() {
   const code = gameCodeInput.value;
   socket.emit('joinGame', code);
+  socket.emit('gameCode', {
+    data: gameCodeInput.value
+  });
+  socket.on('gameCode', function(data){
+    gameCodeDisplay.innerText += data;
+  })
   init();
 }
 
