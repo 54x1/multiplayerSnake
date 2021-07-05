@@ -38,12 +38,12 @@ io.on('connection', client => {
     client.join(roomName);
     client.number = 2;
     client.emit('init', 2);
-    
+
     startGameInterval(roomName);
   }
 
   function handleNewGame() {
-    let roomName = makeid(5);
+    let roomName = makeid(6);
     clientRooms[client.id] = roomName;
     client.emit('gameCode', roomName);
 
@@ -77,7 +77,7 @@ io.on('connection', client => {
 function startGameInterval(roomName) {
   const intervalId = setInterval(() => {
     const winner = gameLoop(state[roomName]);
-    
+
     if (!winner) {
       emitGameState(roomName, state[roomName])
     } else {
