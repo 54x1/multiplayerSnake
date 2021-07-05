@@ -28,7 +28,7 @@ io.on('connection', client => {
     if (numClients === 0) {
       client.emit('unknownCode');
       return;
-    } else if (numClients > 1) {
+    } else if (numClients > 2) {
       client.emit('tooManyPlayers');
       return;
     }
@@ -44,7 +44,7 @@ io.on('connection', client => {
 
   function handleNewGame() {
     var length = 6;
-    let roomName = makeid(length);
+    let roomName = makeid(6);
     clientRooms[client.id] = roomName;
     client.emit('gameCode', roomName);
 
