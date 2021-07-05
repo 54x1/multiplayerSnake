@@ -108,8 +108,8 @@ function handleGameOver(data) {
   }
 }
 
-socket.on('gameCode', function(gameCode){
-    gameCodeDisplay.innerText = gameCode;
+socket.on('gameCode', function(data){
+    gameCodeDisplay.innerText += data;
 });
 
 
