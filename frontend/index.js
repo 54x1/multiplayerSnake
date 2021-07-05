@@ -7,7 +7,7 @@ const socket = io('https://degrassi-mountie-63053.herokuapp.com/');
 socket.on('init', handleInit);
 socket.on('gameState', handleGameState);
 socket.on('gameOver', handleGameOver);
-
+socket.on('gameCode', handleGameCode);
 socket.on('unknownCode', handleUnknownCode);
 socket.on('tooManyPlayers', handleTooManyPlayers);
 
@@ -27,15 +27,9 @@ function newGame() {
   init();
 }
 
-function joinGame(gameCodeInput) {
+function joinGame() {
   const code = gameCodeInput.value;
   socket.emit('joinGame', code);
-  socket.emit('gameCode', {
-    data: gameCodeInput.value
-  });
-  socket.on('gameCode', function(data){
-    gameCodeDisplay.innerText += data;
-  })
   init();
 }
 
@@ -114,10 +108,9 @@ function handleGameOver(data) {
   }
 }
 
-socket.on('gameCode', function(data){
-    gameCodeDisplay.innerText += data;
-});
-
+function handleGameCode(gameCode) {
+  gameCodeDisplay.innerText = gameCode;
+}
 
 function handleUnknownCode() {
   reset();

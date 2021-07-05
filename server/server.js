@@ -12,10 +12,8 @@ io.on('connection', client => {
   client.on('newGame', handleNewGame);
   client.on('joinGame', handleJoinGame);
 
-
-  function handleJoinGame(code) {
-    io.sockets.emit('gameCode', data);
-    const room = io.sockets.adapter.rooms[code];
+  function handleJoinGame(roomName) {
+    const room = io.sockets.adapter.rooms[roomName];
 
     let allUsers;
     if (room) {
