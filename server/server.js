@@ -28,7 +28,7 @@ io.on('connection', client => {
     if (numClients === 0) {
       client.emit('unknownCode');
       return;
-    } else if (numClients > 4) {
+    } else if (numClients > 9) {
       client.emit('tooManyPlayers');
       return;
     }
