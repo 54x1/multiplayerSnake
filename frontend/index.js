@@ -22,6 +22,7 @@ newGameBtn.addEventListener('click', newGame);
 joinGameBtn.addEventListener('click', joinGame);
 
 $(joinGameBtn).on('click', function(){
+  alert(gameCodeInput.val());
 gameCodeDisplay == gameCodeInput.val();
 });
 function newGame() {
