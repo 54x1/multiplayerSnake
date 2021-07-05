@@ -28,7 +28,7 @@ function newGame() {
 }
 
 function joinGame(gameCodeInput) {
-  // gameCodeInput = gameCodeInput.value;
+  const gameCodeInput = gameCodeInput.value;
   socket.emit('joinGame', gameCodeInput);
   socket.emit('gameCode', {
     data: gameCodeInput.value
