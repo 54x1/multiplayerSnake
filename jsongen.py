@@ -1,7 +1,7 @@
 import json
 import csv
 
-with open ("flags.csv", "r") as f:
+with open ("perks.csv", "r") as f:
     reader = csv.reader(f)
     data = {"flags": []}
     for row in reader:
