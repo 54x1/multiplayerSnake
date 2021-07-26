@@ -11,7 +11,7 @@ io.on('connection', client => {
   client.on('keydown', handleKeydown);
   client.on('newGame', handleNewGame);
   client.on('joinGame', handleJoinGame);
-  client.on('getPerks', {data: 'sup'});
+  client.emit('getPerks', { data: 'sup' });
   //
 
   function handlePerksValue(data){
