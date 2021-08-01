@@ -11,7 +11,7 @@ io.on('connection', client => {
   client.on('keydown', handleKeydown);
   client.on('newGame', handleNewGame);
   client.on('joinGame', handleJoinGame);
-  client.emit('getPerks', { data: 'sup' });
+  client.on('getPerks', handlePerksValue);
   //
 
   function handlePerksValue(data){
@@ -47,8 +47,8 @@ io.on('connection', client => {
   }
 
   function handleNewGame() {
-
-    let roomName = makeid(6);
+    var length = 6;
+    let roomName = makeid(length);
     clientRooms[client.id] = roomName;
     client.emit('gameCode', roomName);
 

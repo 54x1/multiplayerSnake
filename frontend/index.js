@@ -28,7 +28,6 @@ $(joinGameBtn).on('click', function(){
   // alert($(gameCodeInput).val());
 $(gameCodeDisplay).html($(gameCodeInput).val());
 
-
 });
 function setPerks(){
 $.getJSON("perks.json", function(data, perkOne, perkTwo){
@@ -38,22 +37,23 @@ $.getJSON("perks.json", function(data, perkOne, perkTwo){
         var perkValue2 = data.perks[randIn2].card;
         // var perkOne = $('.perk1').text(perkValue1);
         //   var perkTwo = $('.perk2').text(perkValue2);
-
+return [{value1: perkValue1}, {value2: perkValue2}];
           // console.log(perkOne);
-socket.emit('getPerks', {value1: perkValue1, value2: perkValue2});
+socket.emit('getPerks', [{value1: perkValue1}, {value2: perkValue2}]);
 
 
 });
 }
 
-function handleGetPerksValue(msg){
-  alert(msg);
+function handleGetPerksValue(data){
+setPerks();
       $('.perk1').text(data.value1);
       $('.perk2').text(data.value2);
 }
 function joinGame() {
   const code = gameCodeInput.value;
   socket.emit('joinGame', code);
+  setPerks();
   init();
 }
 function getPerksValue(data){
