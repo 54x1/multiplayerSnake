@@ -7,11 +7,12 @@ const state = {};
 const clientRooms = {};
 
 io.on('connection', client => {
-      client.on('newGame1', handleNewGam1);
+      client.on('perks', dataPerks);
   client.on('newGame', handleNewGame);
   client.on('joinGame', handleJoinGame);
-});
+function dataPerks(){
 
+}
   function handleJoinGame(roomName) {
 
     const room = io.sockets.adapter.rooms[roomName];
@@ -56,17 +57,6 @@ io.on('connection', client => {
     client.emit('init', 1);
 
   }
-  function handleNewGame1(){
-    var roomName1 = 'happy';
-    client.emit('gameCode1', roomName1);
-  //   $.getJSON("perks.json",function(data){
-  //       var randIn = Math.floor(Math.random() * (data.perks.length + 1));
-  //       var randIn2 = Math.floor(Math.random() * (data.perks.length + 1));
-  // var perks = [randIn, randIn2];
-  //
-  //   });
-
-  }
 
 
 
@@ -87,6 +77,5 @@ function emitGameOver(room, winner) {
   io.sockets.in(room)
     .emit('gameOver', JSON.stringify({ winner }));
 }
-
 
 io.listen(process.env.PORT || 3000);

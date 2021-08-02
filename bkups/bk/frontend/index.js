@@ -1,6 +1,3 @@
-const BG_COLOUR = '#231f20';
-const SNAKE_COLOUR = '#c2c2c2';
-const FOOD_COLOUR = '#e66916';
 
 // $('.card-section').each(function(){
 //   $(this).on('click', function(){
@@ -28,20 +25,24 @@ $('.card-section').on('touchmove', function(){
 // $(this).css({"left"}) =
 });
 const socket = io('https://degrassi-mountie-63053.herokuapp.com/');
-// var perk1val = document.getElementsByClassName('perk3');
-// var perk2val = document.getElementsByClassName('perk4');
-// // console.log(perk2val.value);
-// socket.emit('perks', {
-//        perk1: perk1val.value,
-//        perk2s: perk2val.value
-//    });
+var perk1val = document.getElementsByClassName('perk3');
+var perk2val = document.getElementsByClassName('perk4');
+// console.log(perk2val.value);
+socket.emit('perks', {
+       perk1: perk1val.value,
+       perk2s: perk2val.value
+   });
 socket.on('init', handleInit);
 socket.on('gameState', handleGameState);
 socket.on('gameOver', handleGameOver);
 socket.on('gameCode', handleGameCode);
 socket.on('unknownCode', handleUnknownCode);
 socket.on('tooManyPlayers', handleTooManyPlayers);
-socket.on('gameCode1', handleGameCode1);
+socket.on('perks', function(perkData){
+  alert(perkData);
+    $('.perk1').append(perkData.perk1);
+    $('.perk2').append(perkData.perk2);
+});
 
 
 const gameScreen = document.getElementById('gameScreen');
@@ -50,49 +51,23 @@ const newGameBtn = document.getElementById('newGameButton');
 const joinGameBtn = document.getElementById('joinGameButton');
 const gameCodeInput = document.getElementById('gameCodeInput');
 const gameCodeDisplay = document.getElementById('gameCodeDisplay');
-const gamePerk1 = $('.perk1').val();
-newGameBtn.addEventListener('click', newGame);
-newGameBtn.addEventListener('click', joinGame1);
+
+newGameBtn.addEventListener('click', {newGame, });
 joinGameBtn.addEventListener('click', joinGame);
 
 $(joinGameBtn).on('click', function(){
   // alert($(gameCodeInput).val());
 $(gameCodeDisplay).html($(gameCodeInput).val())
-$('.perk1').append(gamePerk1);
 });
-
 function newGame() {
   socket.emit('newGame');
-  // alert('ng');
   init();
 }
 
-function joinGame1(){
-  socket.emit('newGame1');
-//     // alert('ppp');
-//     $.getJSON("perks.json",function(data){
-//         var randIn = Math.floor(Math.random() * (data.perks.length));
-//         var randIn2 = Math.floor(Math.random() * (data.perks.length));
-//         // var perkData1 = $('.perk1').append(data.perks[randIn].card);
-//         var perkData2 = $('.perk2').append(data.perks[randIn2].card);
-//
-// $(joinGameBtn).on('click', function(perkData1, perkData2){
-//
-// });
-//         console.log(data);
-//
-//     });
-
-  // $('body').append(perksData2);
-        // alert('heree1');
-
-    // });
-
+function getPerks(perkData){
+    socket.emit('perks', perkData);
 }
-function getPerksData(perks2){
-$('.perk1').append('perks2');
-$('.perk2').append(perkData2);
-}
+
 function joinGame() {
   const code = gameCodeInput.value;
   socket.emit('joinGame', code);
@@ -131,16 +106,16 @@ function init() {
 
   });
 
-  // $.getJSON("perks.json",function(data){
-  //     var randIn = Math.floor(Math.random() * (data.perks.length + 1));
-  //     var randIn2 = Math.floor(Math.random() * (data.perks.length + 1));
-  //     // getPerks(randIn, randIn2, data);
-  //
-  //
-  //     console.log(data);
-  //     // alert('heree1');
-  //
-  // });
+  $.getJSON("perks.json",function(data){
+      var randIn = Math.floor(Math.random() * (data.perks.length));
+      var randIn2 = Math.floor(Math.random() * (data.perks.length));
+      getPerks(randIn, randIn2, data);
+
+
+      console.log(data);
+      // alert('heree1');
+
+  });
 
 
 
@@ -153,6 +128,10 @@ function init() {
 }
 
 
+function getPerks(randIn, randIn2, data){
+  $('.perk3').append(data.perks[randIn].card);
+  $('.perk4').append(data.perks[randIn2].card);
+}
 
 function paintGame(state) {
 
@@ -190,19 +169,10 @@ function handleGameOver(data) {
 function handleGameCode(gameCode) {
   gameCodeDisplay.innerText = gameCode;
 }
-function handleGameCode1(gameCode1){
-$('.perk1').append(gameCode1);
-alert('doen');
-// $.getJSON("perks.json",function(data){
-//     var randIn = Math.floor(Math.random() * (data.perks.length));
-//     var randIn2 = Math.floor(Math.random() * (data.perks.length));
-//     var perkData = [randIn, randIn2];
-//     $('body').append('perkData');
-// });
-}
+
 function handleUnknownCode() {
   reset();
-  alert('Unknown Game Code');
+  alert('Unknown Game Code')
 }
 
 function handleTooManyPlayers() {
@@ -210,10 +180,8 @@ function handleTooManyPlayers() {
   alert('This game is already in progress');
 }
 
-
 function reset() {
   playerNumber = null;
-  // $('.perk1, .perk2').html('');
   gameCodeInput.value = '';
   initialScreen.style.display = "block";
   gameScreen.style.display = "none";
