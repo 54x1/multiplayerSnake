@@ -68,20 +68,19 @@ function newGame() {
 }
 
 function joinGame1(){
-  socket.emit('newGame1');
-//     // alert('ppp');
-//     $.getJSON("perks.json",function(data){
-//         var randIn = Math.floor(Math.random() * (data.perks.length));
-//         var randIn2 = Math.floor(Math.random() * (data.perks.length));
-//         // var perkData1 = $('.perk1').append(data.perks[randIn].card);
-//         var perkData2 = $('.perk2').append(data.perks[randIn2].card);
-//
+  // socket.emit('newGame1');
+    $.getJSON("perks.json",function(data){
+        var randIn = Math.floor(Math.random() * (data.perks.length));
+        var randIn2 = Math.floor(Math.random() * (data.perks.length));
+        var perkData1 = $('.perk1').append(data.perks[randIn].card);
+        var perkData2 = $('.perk2').append(data.perks[randIn2].card);
+
 // $(joinGameBtn).on('click', function(perkData1, perkData2){
 //
 // });
-//         console.log(data);
-//
-//     });
+        console.log(data);
+
+    });
 
   // $('body').append(perksData2);
         // alert('heree1');
@@ -191,14 +190,11 @@ function handleGameCode(gameCode) {
   gameCodeDisplay.innerText = gameCode;
 }
 function handleGameCode1(gameCode1){
-$('.perk1').append(gameCode1);
-alert('doen');
-// $.getJSON("perks.json",function(data){
-//     var randIn = Math.floor(Math.random() * (data.perks.length));
-//     var randIn2 = Math.floor(Math.random() * (data.perks.length));
-//     var perkData = [randIn, randIn2];
-//     $('body').append('perkData');
-// });
+$.getJSON("perks.json",function(data){
+    var randIn = Math.floor(Math.random() * (data.perks.length));
+    var randIn2 = Math.floor(Math.random() * (data.perks.length));
+    $('body').append('perkData');
+});
 }
 function handleUnknownCode() {
   reset();

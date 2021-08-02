@@ -7,7 +7,7 @@ const state = {};
 const clientRooms = {};
 
 io.on('connection', client => {
-      client.on('newGame1', handleNewGame1);
+      // client.on('newGame1', handleNewGame1);
   client.on('newGame', handleNewGame);
   client.on('joinGame', handleJoinGame);
 });
@@ -56,17 +56,17 @@ io.on('connection', client => {
     client.emit('init', 1);
 
   }
-  function handleNewGame1(){
-    var roomName1 = 'happy';
-    client.emit('gameCode1', roomName1);
-  //   $.getJSON("perks.json",function(data){
-  //       var randIn = Math.floor(Math.random() * (data.perks.length + 1));
-  //       var randIn2 = Math.floor(Math.random() * (data.perks.length + 1));
-  // var perks = [randIn, randIn2];
+  // function handleNewGame1(){
+  //   var roomName1 = 'happy';
+  //   client.emit('gameCode1', roomName1);
+  // //   $.getJSON("perks.json",function(data){
+  // //       var randIn = Math.floor(Math.random() * (data.perks.length + 1));
+  // //       var randIn2 = Math.floor(Math.random() * (data.perks.length + 1));
+  // // var perks = [randIn, randIn2];
+  // //
+  // //   });
   //
-  //   });
-
-  }
+  // }
 
 
 
