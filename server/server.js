@@ -1,25 +1,22 @@
 const io = require('socket.io')();
-const { initGame, gameLoop, getUpdatedVelocity } = require('./game');
-const { getVal } = require('./constants');
+const { initGame } = require('./game');
+const { FRAME_RATE } = require('./constants');
 const { makeid } = require('./utils');
 
 const state = {};
 const clientRooms = {};
 
 io.on('connection', client => {
-
-  client.on('keydown', handleKeydown);
+      client.on('perks', dataPerks);
   client.on('newGame', handleNewGame);
   client.on('joinGame', handleJoinGame);
-  client.on('getPerks', handlePerksValue);
-  //
+function dataPerks(){
 
-  function handlePerksValue(data){
-        client.emit('getPerks', data);
-  }
-
+}
   function handleJoinGame(roomName) {
+
     const room = io.sockets.adapter.rooms[roomName];
+
     let allUsers;
     if (room) {
       allUsers = room.sockets;
@@ -33,7 +30,7 @@ io.on('connection', client => {
     if (numClients === 0) {
       client.emit('unknownCode');
       return;
-    } else if (numClients > 1) {
+    } else if (numClients > 9) {
       client.emit('tooManyPlayers');
       return;
     }
@@ -43,6 +40,7 @@ io.on('connection', client => {
     client.join(roomName);
     client.number = 2;
     client.emit('init', 2);
+
     startGameInterval(roomName);
   }
 
@@ -57,47 +55,23 @@ io.on('connection', client => {
     client.join(roomName);
     client.number = 1;
     client.emit('init', 1);
+
   }
 
-  function handleKeydown(keyCode) {
-    const roomName = clientRooms[client.id];
-    if (!roomName) {
-      return;
-    }
-    try {
-      keyCode = parseInt(keyCode);
-    } catch(e) {
-      console.error(e);
-      return;
-    }
 
-    const vel = getUpdatedVelocity(keyCode);
 
-    if (vel) {
-      state[roomName].players[client.number - 1].vel = vel;
-    }
-  }
-});
 
-function startGameInterval(roomName) {
-  const intervalId = setInterval(() => {
-    const winner = gameLoop(state[roomName]);
 
-    if (!winner) {
-      emitGameState(roomName, state[roomName])
-    } else {
-      emitGameOver(roomName, winner);
-      state[roomName] = null;
-      clearInterval(intervalId);
-    }
-  }, 1000 / FRAME_RATE);
-}
 
 function emitGameState(room, gameState) {
   // Send this event to everyone in the room.
   io.sockets.in(room)
     .emit('gameState', JSON.stringify(gameState));
 }
+
+// function displayPerks(room, getPerks){
+//   io.sockets.in(room).emit('init', getPerks)
+// }
 
 function emitGameOver(room, winner) {
   io.sockets.in(room)
