@@ -50,44 +50,44 @@ const newGameBtn = document.getElementById('newGameButton');
 const joinGameBtn = document.getElementById('joinGameButton');
 const gameCodeInput = document.getElementById('gameCodeInput');
 const gameCodeDisplay = document.getElementById('gameCodeDisplay');
-const gamePerk1 = $('.perk1').val();
+
 newGameBtn.addEventListener('click', newGame);
 newGameBtn.addEventListener('click', joinGame1);
 joinGameBtn.addEventListener('click', joinGame);
 
 $(joinGameBtn).on('click', function(){
   // alert($(gameCodeInput).val());
+  const varPerks = perk();
 $(gameCodeDisplay).html($(gameCodeInput).val())
-$('.perk1').append(gamePerk1);
+$('.perk1').append(varPerks[0]);
+
 });
 
 function newGame() {
+  const varPerks = perk();
   socket.emit('newGame');
   // alert('ng');
   init();
 }
 
-function joinGame1(){
+function joinGame1(perkData1, perkData2){
   // socket.emit('newGame1');
     $.getJSON("perks.json",function(data){
         var randIn = Math.floor(Math.random() * (data.perks.length));
         var randIn2 = Math.floor(Math.random() * (data.perks.length));
-        var perkData1 = $('.perk1').append(data.perks[randIn].card);
-        var perkData2 = $('.perk2').append(data.perks[randIn2].card);
-
-// $(joinGameBtn).on('click', function(perkData1, perkData2){
-//
-// });
-        console.log(data);
-
+        var perkData1 = (data.perks[randIn].card);
+        var perkData2 = (data.perks[randIn2].card);
+        var perks = [perkData1, perkData2];
+perk(perks);
     });
 
-  // $('body').append(perksData2);
-        // alert('heree1');
-
-    // });
 
 }
+function perk(perks) {
+  console.log(perks);
+return perks;
+}
+
 function getPerksData(perks2){
 $('.perk1').append('perks2');
 $('.perk2').append(perkData2);
