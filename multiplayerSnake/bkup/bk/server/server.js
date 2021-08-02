@@ -28,7 +28,7 @@ io.on('connection', client => {
     if (numClients === 0) {
       client.emit('unknownCode');
       return;
-    } else if (numClients > 9) {
+    } else if (numClients > 1) {
       client.emit('tooManyPlayers');
       return;
     }
@@ -38,13 +38,12 @@ io.on('connection', client => {
     client.join(roomName);
     client.number = 2;
     client.emit('init', 2);
-
+    
     startGameInterval(roomName);
   }
 
   function handleNewGame() {
-    var length = 6;
-    let roomName = makeid(length);
+    let roomName = makeid(5);
     clientRooms[client.id] = roomName;
     client.emit('gameCode', roomName);
 
@@ -78,7 +77,7 @@ io.on('connection', client => {
 function startGameInterval(roomName) {
   const intervalId = setInterval(() => {
     const winner = gameLoop(state[roomName]);
-
+    
     if (!winner) {
       emitGameState(roomName, state[roomName])
     } else {
