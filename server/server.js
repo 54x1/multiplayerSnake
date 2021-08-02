@@ -7,7 +7,7 @@ const state = {};
 const clientRooms = {};
 
 io.on('connection', client => {
-      client.on('newGame1', handleNewGam1);
+      client.on('newGame1', handleNewGame1);
   client.on('newGame', handleNewGame);
   client.on('joinGame', handleJoinGame);
 });
